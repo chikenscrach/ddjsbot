@@ -1,7 +1,7 @@
 // fs 能夠讀取commands底下的指令
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
 // 看需求增加intents, 詳細請看API
@@ -16,11 +16,12 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
 	const filePath = path.join(commandsPath, file);
 	const command = require(filePath);
-	// Set a new item in the Collection with the key as the command name and the value as the exported module
+	// 在創建Collection中創建新的物件
 	if ('data' in command && 'execute' in command) {
 		client.commands.set(command.data.name, command);
-	} else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+	}
+	else {
+		console.log(`[WARNING] 指令 ${filePath} 缺少 "data" 或 "execute" 屬性。`);
 	}
 }
 
@@ -32,3 +33,22 @@ client.once(Events.ClientReady, c => {
 
 // 透過token登入Discord
 client.login(token);
+
+client.on(Events.InteractionCreate, async interaction => {
+	if (!interaction.isChatInputCommand()) return;
+
+	const command = interaction.client.commands.get(interaction.commandName);
+
+	if (!command) {
+		console.error(`沒有名為 ${interaction.commandName} 的指令。`);
+		return;
+	}
+
+	try {
+		await command.execute(interaction);
+	}
+	catch (error) {
+		console.error(error);
+		await interaction.reply({ content: '執行指令時發生錯誤！', ephemeral: true });
+	}
+});
