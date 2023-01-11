@@ -1,3 +1,4 @@
+// 與server合併為info
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {

@@ -39,34 +39,5 @@ for (const file of commandFiles) {
 	}
 }
 
-// When the client is ready, run this code (only once)
-// We use 'c' for the event parameter to keep it separate from the already defined 'client'
-/* 此部分移至 events/ready.js
-client.once(Events.ClientReady, c => {
-	console.log(`${c.user.tag} 準備登入！`);
-});
-*/
-
 // 透過token登入Discord
 client.login(token);
-
-/* 此部分移至events/interactionCreate.js
-client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
-
-	const command = interaction.client.commands.get(interaction.commandName);
-
-	if (!command) {
-		console.error(`沒有名為 ${interaction.commandName} 的指令。`);
-		return;
-	}
-
-	try {
-		await command.execute(interaction);
-	}
-	catch (error) {
-		console.error(error);
-		await interaction.reply({ content: '執行指令時發生錯誤！', ephemeral: true });
-	}
-});
-*/

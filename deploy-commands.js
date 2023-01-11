@@ -1,3 +1,4 @@
+// 有新的指令要先註冊指令
 const { REST, Routes } = require('discord.js');
 const { clientId, guildId, token } = require('./config.json');
 const fs = require('node:fs');
@@ -20,7 +21,7 @@ const rest = new REST({ version: '10' }).setToken(token);
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-		// The put method is used to fully refresh all commands in the guild with the current set
+		// 把所有指令註冊在伺服器上
 		const data = await rest.put(
 			Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands },
