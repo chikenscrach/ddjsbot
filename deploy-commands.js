@@ -3,10 +3,10 @@ const { clientId, guildId, token } = require('./config.json');
 const fs = require('node:fs');
 
 const commands = [];
-// Grab all the command files from the commands directory you created earlier
+// 獲取所有commands資料夾底下的js檔
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
+// 獲取 SlashCommandBuilder#toJSON() 的輸出資料
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	commands.push(command.data.toJSON());
@@ -27,8 +27,8 @@ const rest = new REST({ version: '10' }).setToken(token);
 		);
 
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-	} catch (error) {
-		// And of course, make sure you catch and log any errors!
+	}
+	catch (error) {
 		console.error(error);
 	}
 })();
