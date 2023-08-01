@@ -1,5 +1,6 @@
 {
 	"token": "TOKEN放這裡",
 	"clientId": "你的application ID", 
-	"guildId": "你的伺服器ID"
+	"guildId": "你的伺服器ID",
+	"holodexAPIKey": "你的holodex API Key"
 }

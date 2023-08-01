@@ -30,14 +30,18 @@ module.exports = {
 				const timeSec = Math.floor((diff % (1000 * 60)) / 1000);
 
 				await interaction.reply(`鯊鯊上次開台已經過了：\n${timeDay} 天 ${timeHour} 時 ${timeMin} 分 ${timeSec} 秒\n[${streamData.title}](https://youtu.be/${streamData.id})`);
-			} else if (streamData.status === 'upcoming') {
+			}
+			else if (streamData.status === 'upcoming') {
 				await interaction.reply(`鯊鯊就快開台了，還不快去待機！\nhttps://youtu.be/${streamData.id}`);
-			} else if (streamData.status === 'live') {
+			}
+			else if (streamData.status === 'live') {
 				await interaction.reply(`鯊鯊正在開台，還不快去看！\nhttps://youtu.be/${streamData.id}`);
-			} else {
+			}
+			else {
 				await interaction.reply('不要再黑我們可愛的鯊鯊了！');
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			await interaction.reply('Error fetching data:', error.message);
 		}
 	},
